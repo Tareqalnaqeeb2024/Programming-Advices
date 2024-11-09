@@ -1,0 +1,77 @@
+
+
+#include <iostream>
+#include "clsBankClient.h"
+#include"clsInputValidate.h"
+
+ void ReadClientDate(clsBankClient& Client)
+{
+	cout << "\n Please enter FristName ?";
+	Client.FristName = clsInputValidate::ReadString();
+	cout << "\n please enter Last Name ?";
+	Client.LastName = clsInputValidate::ReadString();
+	cout << "\n Please enter Email ?";
+	Client.Email = clsInputValidate::ReadString();
+	cout << "\n Please enter Phone ?";
+	Client.Phone = clsInputValidate::ReadString();
+	cout << "\n Please enter PinCode ?";
+	Client.PinCode = clsInputValidate::ReadString();
+	cout << "\n Please enter Account balance ?";
+	Client.AccountBalance = clsInputValidate::ReadFloatNumber();
+}
+
+ void UpdateClientDate()
+ {
+	 string AccountNumber = "";
+	 cout << "\n Please enter AcountNumber ? \n"; 
+	 AccountNumber = clsInputValidate::ReadString();
+
+	 while (! clsBankClient::IsClientExist(AccountNumber) )
+	 {
+		 cout << "Account Number Is Not Found , plaese enter correct Account Number ! \n";
+		 AccountNumber = clsInputValidate::ReadString();
+
+	 }
+
+	 clsBankClient Client1 = clsBankClient::Find(AccountNumber);
+	 Client1.Print();
+
+	 cout << " Update Client Info \n";
+	 cout << "____________________\n";
+	 ReadClientDate(Client1); 
+
+	 clsBankClient::enSaveReslute SaveReslute;
+
+	 SaveReslute = Client1.Save();
+
+
+	 switch (SaveReslute)
+	 {
+	 case clsBankClient::enFaliedClientObject:
+		 cout << "Erro Acount Becasue Is empty Client\n";
+		 break;
+	 case clsBankClient::enSucsecceded:
+		 cout << "\nAccount Updated Successfully :-)\n";
+		 Client1.Print();
+		 
+		 break;
+	
+	 }
+	 
+	 
+
+
+
+ }
+
+
+
+int main()
+
+{
+	UpdateClientDate();
+
+
+	system("pause>0");
+	return 0;
+}

@@ -1,0 +1,61 @@
+
+
+#include <iostream>
+#include"clsPerson.h"
+#include "clsBankClient.h"
+#include"clsInputValidate.h"
+#include <iomanip>
+void PrintClientRecoredLine(clsBankClient Client)
+{
+	cout << "| " << left<< setw(15) << Client.AccountNumber();
+	cout << "| " << left <<  setw(20) << Client.FullName();
+	cout << "| " << left << setw(12) << Client.Phone;
+	cout << "| " << left << setw(20) << Client.Email;
+	cout << "| " << left << setw(10) << Client.PinCode;
+	cout << "| " << left<< (12) << Client.AccountBalance;
+
+
+}
+
+void ShowClientList()
+{
+	vector<clsBankClient> vClient = clsBankClient::GetClientList();
+
+	cout << "\n\t\t\t\t\\t Vector  size = (" << vClient.size() << ") Client(s).";
+	cout << "\n_________________________________________________________";
+	cout << "__________________________________________________________\n" << endl;
+
+	cout << "| " << left<< setw(15) << "Acc.Number";
+	cout << "| " << left << setw(20)<<left << "Client Name";
+	cout << "| " << left << setw(12) << " Phone ";
+	cout << "| " << left << setw(20) << " Email";
+	cout << "| " << left << setw(10) << " PinCode";
+	cout << "| " << left << setw(12) << "Acc.Balace";
+
+	cout << "\n_________________________________________________________";
+	cout << "__________________________________________________________\n" << endl;
+
+	if (vClient.size() ==0)
+	{
+		cout << " \t\t\t\t\t No Client Avalaible In System !" << endl;
+
+	}
+	else
+	{
+		for (clsBankClient Client : vClient)
+		{
+			PrintClientRecoredLine(Client);
+			cout << endl;
+		}
+	}
+
+}
+
+int main()
+
+{
+	ShowClientList();
+
+	system("pause>0");
+	return 0;
+}
