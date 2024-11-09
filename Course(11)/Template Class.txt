@@ -1,0 +1,79 @@
+//ProgrammingAdvices.com
+//Mohammed Abu-Hadhoud
+
+#include <iostream>
+using namespace std;
+
+template <class T>
+class Calculator
+{
+
+private:
+	T Number1, Number2;
+public:
+
+	Calculator(T Num1, T Num2)
+	{
+		Number1 = Num1;
+		Number2 = Num2;
+	 }
+
+	void PrintResulte()
+	{
+		cout << "Numbers :" << Number1 << " ," << Number2 << " ." << endl;
+		cout << Number1 << "+" << Number2 << "=" << Add() << endl;
+		cout << Number1 << "-" << Number2 << "=" << Subtract() << endl;
+		cout << Number1 << "/" << Number2 << "=" << Divide() << endl;
+		cout << Number1 << "*" << Number2 << "=" << Mulitply() << endl;
+	}
+	T Add()
+	{
+		return Number1 + Number2;
+	}
+
+	T Subtract()
+	{
+		return Number1 - Number2;
+	}
+
+	T Mulitply()
+	{
+		return Number1 * Number2;
+	}
+
+	T Divide()
+	{
+		return Number1 / Number2;
+	}
+
+
+
+
+};
+
+
+int main()
+{
+
+	Calculator <int> IntCalCualtor(5, 10);
+
+	cout << " intger Calculator \n";
+
+	cout << endl;
+
+	IntCalCualtor.PrintResulte();
+	cout << endl;
+
+
+	Calculator<double> DblCalcualtor(12.4, 13.8);
+
+	cout << "Double Calculator\n";
+	cout << endl;
+
+	DblCalcualtor.PrintResulte();
+	cout << endl;
+
+
+
+	
+}

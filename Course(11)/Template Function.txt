@@ -1,0 +1,27 @@
+// ConsoleApplication4.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include<string>
+#include <iostream>
+#include<vector>
+#include<fstream>
+#include<iomanip>
+using namespace std;
+
+template <typename T> T MyMax(T Number1, T Number2)
+{
+	return (Number1 > Number2) ? Number1 : Number2;
+}
+
+int main()
+{
+	
+	cout << MyMax<int>(3, 7)<<endl;
+	cout << MyMax <double>(12.50, 20.14) << endl;
+	cout << MyMax<char>('a', 'c') << endl;
+	
+
+	system("pause>0");
+
+	return 0;
+}
