@@ -1,0 +1,75 @@
+// Peroject Sample Calcutoter.
+//
+
+#include <iostream>
+#include<fstream>
+#include<string>
+#include<vector>
+using namespace std;
+class clsPerson
+{
+
+	
+
+	
+
+
+
+public:
+
+	string FullName ;
+
+	clsPerson()
+	{
+		FullName = "Tareq Alnaqeeb \n";
+
+		cout << " Hi, I am Constractor\n";
+
+
+
+	}
+	~clsPerson()
+	{
+		cout << " Hi, I am Dostractor\n";
+
+	}
+
+	
+	
+
+};
+
+void Fun1()
+{
+	clsPerson Person1;
+
+}
+
+void Fun2()
+{
+	clsPerson* Person2 = new clsPerson;
+
+	delete Person2;
+}
+
+int main()
+{
+	Fun1();
+	Fun2();
+
+	
+
+	
+	
+
+
+
+
+
+
+	system("pause>0");
+	
+	
+	return 0;
+}
+

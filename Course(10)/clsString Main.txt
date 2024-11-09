@@ -1,0 +1,73 @@
+
+#include<iostream>
+#include<vector>
+#include"clsString.h";
+using namespace std;
+int main()
+{
+	clsString String1;
+	clsString String2 ("tareq");
+	String1.Value = "Ali,' Saleh/";
+
+
+	cout << "string 1 = " << String1.Value << endl;
+	cout << "string 2 = " << String2.Value << endl;
+
+	cout << " Number of Word " << String1.CountWords() << endl;
+	cout << " Number of Word " << String1.CountWords(" I am student") << endl;
+	cout << " Number of Word " << clsString::CountWords(" I am 24 years old")<< endl;
+
+	cout << " Frist letter :"; String1.PrintFristLetterOfEachLetter();
+	cout << " Frist letter :"; String1.PrintFristLetterOfEachLetter(" Hello Every one ");
+	cout << " Frist letter :"; clsString::PrintFristLetterOfEachLetter("My name is tareq");
+	cout <<String1.IsVowelLetter('l');
+	cout << clsString::IsVowelLetter('l');
+	cout << " Voewl"<< String1.CountVowelLettr();
+
+	cout << "\n Print All Vowel Letter :"; String1.PrintAllVowelLettr() ;
+	cout << "\n Print All Vowel Letter :"; String1.PrintAllVowelLettr(" I am From yemen " );
+	cout << "\n Print All Vowel Letter :"; clsString::PrintAllVowelLettr(" I am From yemen ");
+
+	cout << "\nWords Of String "; String1.WordsOfString();
+	cout << "\nWords Of String "; String1.WordsOfString("I like You So much  ");
+	cout << "\nWords Of String "; clsString::WordsOfString("I like You So much  ");
+
+	cout << " \n Count Words Of string :" << String1.CountWordOfString() << endl;
+	cout << " \n Count Words Of string :" << String1.CountWordOfString(" Sanaa is My Love ") << endl;
+	cout << " \n Count Words Of string :" << clsString::CountWordOfString(" My Parent My Life") << endl;
+
+	vector<string>Vstring;
+	Vstring = String1.SplitWord("//");
+
+	for (string& S : Vstring)
+	{
+		cout << S << endl;
+	}
+
+	vector<string>Vstring1 = { "tareq" ,"ali" ,"mohummed" };
+
+	cout << "Join string whith vector :" << clsString::JoinString(Vstring1, "// ") << endl;
+
+	string arrString[3] = { "Father", "Mother" ," Sister" };
+	cout << "Join string whith arry :" << clsString::JoinString(arrString,3,"//" ) << endl;
+
+
+	cout << "Revesred Words" << String1.ReverseWordInString() << endl;
+	cout << "Revesred Words" << String1.ReverseWordInString(" Tareq Rageh Alnaqeeb") << endl;
+	cout << "Revesred Words" << clsString::ReverseWordInString(" Tareq Rageh Alnaqeeb") << endl;
+
+	//cout << " Replace words " << String1.ReplaceWord("Ali", "Tareq") << endl;
+	//cout << " Replace words " << String1.ReplaceWord("Saleh", "Tareq") << endl;
+	cout << " Replace words " << clsString::ReplaceWord( "I am 20 years and i am married","married", "snigel") << endl;
+
+	cout << "Remove Punctiuation " << String1.RemovePunctiuation() << endl;
+	cout << "Remove Punctiuation " << String1.RemovePunctiuation(" I heve  been thetr 25 , years ago ?") << endl;
+	cout << "Remove Punctiuation " << clsString::RemovePunctiuation(" Hello , I  am here /;'") << endl;
+
+
+
+
+	system("pause >0");
+	return 0;
+	
+}

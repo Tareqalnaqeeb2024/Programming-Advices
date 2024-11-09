@@ -1,0 +1,69 @@
+// Peroject Sample Calcutoter.
+//
+
+#include <iostream>
+#include<fstream>
+#include<string>
+#include<vector>
+using namespace std;
+class clsPerson
+{
+
+	
+
+	
+
+
+
+public:
+
+	int Var;
+	static int Counter;
+
+	clsPerson()
+	{
+		Counter++;
+	}
+	void Print()
+	{
+		cout << "\n var = " << Var << endl;
+		cout << "\n Conuter = " << Counter << endl;
+	}
+};
+
+int clsPerson::Counter = 0; // It Must initialisation OutSide the class
+
+
+int main()
+{
+	clsPerson A1, A2, A3;
+	A1.Var = 10;
+	A2.Var = 20;
+	A3.Var = 30;
+
+	A1.Print();
+	A2.Print();
+	A3.Print();
+	 // It will Change for every Object 
+	A1.Counter = 500; 
+	 
+	cout << "After Change the static member counter \n";
+
+	A1.Print();
+	A2.Print();
+	A3.Print();
+
+	
+	
+
+
+
+
+
+
+	system("pause>0");
+	
+	
+	return 0;
+}
+

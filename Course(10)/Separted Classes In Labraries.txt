@@ -1,0 +1,43 @@
+// Peroject Sample Calcutoter.
+//
+
+#include <iostream>
+#include<fstream>
+#include<string>
+#include<vector>
+#include "clsEmployee.h";
+#include "clsPerson.h";
+using namespace std;
+
+
+int main()
+{
+
+
+	clsEmployee Employee(10, "tareq", "Alanaqeeb", "me@gmali.com", "7735142", "CEO", "Marketing", 5000);
+	Employee.Print();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	system("pause>0");
+
+
+	return 0;
+}
+

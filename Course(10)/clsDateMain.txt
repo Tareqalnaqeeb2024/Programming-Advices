@@ -1,0 +1,118 @@
+
+#include<iostream>
+#include<vector>
+#include"clsDate.h";
+using namespace std;
+int main()
+{
+	clsDate Date1;
+	Date1.Print();
+
+	clsDate Date2(3,5,2002);
+	Date2.Print();
+
+	clsDate Date3("1/6/2002");
+	Date3.Print();
+	//cout<<Date1.DayShortName();
+
+	//cout << Date1.MonthShortName();
+
+	//Date3.MonthCalendar();
+	
+	//clsDate::YearCalender(2011);
+	
+	//Date2.YearCalender();
+
+	//cout << Date1.NumberOfDaysFromBagainingOfYear();
+	//cout << clsDate::NumberOfDaysFromBagainingOfYear(1, 1, 2001);
+
+	//Date1.AddDay(2);
+	//Date1.Print();
+
+	//cout<< Date1.IsLessThanDateTwo(Date2)<<endl;
+
+	//cout << clsDate::DateOneLessThanDateTwo(Date2, Date1);
+
+	//cout << Date1.IsDateEqualDateTwo(Date3);
+
+	//cout << Date2.IsLastDayInMonth();
+
+	//cout << Date3.IsLastMonth();
+
+	 //Date1.AddOneDay();
+
+	//cout << clsDate::GetDiffranceBetweenDate1AndDate2(Date2, Date1);
+
+	//cout << clsDate::GetYourAge(Date3);
+
+   //Date2.IncreasingDateByOneWeek();
+   //Date2.Print();
+
+	//Date1.IncreasingDateByXWeek(2);
+	//Date1.Print();
+
+	//Date2.IncreasingDateByOneMonth();
+	//Date2.Print();
+
+	//Date1.IncreasingDateByXMonth(3);
+	//Date1.Print();
+
+	//Date1.IncreasingDateByOneYear();
+	//Date1.Print();
+
+	//Date3.IncreasingDateByXYear(5);
+	//Date3.Print();
+
+	//Date2.IncreasingDateByOneDecade();
+	//Date2.Print();
+
+	//Date3.IncreasingDateByXDecade(2);
+	//Date3.Print();
+
+	//Date1.IncreasingDateByOneCentury();
+	//Date1.Print();
+
+	// Decreasing date by one 
+	//Date1.DecreasingDateByOneDay();
+	//Date1.Print();
+
+	//Date1.DecreasingDateByWeek();
+	//Date1.Print();
+
+	//Date2.DecreasingDateByXWeek(2);
+	//Date2.Print();
+
+	//Date3.DecreasingDateByOneMonth();
+	//Date3.Print();
+
+	//Date2.DecreasingDateByXMonth(3);
+	//Date2.Print();
+
+	//Date1.DecreasingDateByYear();
+	//Date1.Print();
+
+	//Date3.DecreasingDateByXYear(2);
+	//Date3.Print();
+
+	//Date2.DecreasingDateByDecade();
+	//Date2.Print();
+
+	//Date1.DecreasingDateByXDecades(2);
+	//Date1.Print();
+
+	 //cout<< Date1.IsBusinessDay()<<endl;
+	 //cout << Date2.IsEndOfWeek()<<endl;
+	 //cout << Date3.IsWeekEndDay();
+
+	//cout << Date1.DaysUntillEndOfWeek() << endl;
+	//cout << Date2.DaysUntillEndOfMonth() << endl;
+	//cout << Date3.DaysUntillEndOfYear() << endl;
+
+	cout << clsDate::GetBuinessDays(Date2, Date3) << endl;
+	cout << clsDate::GetVactionsDays(Date2, Date3) << endl;
+
+	 
+	system("pause >0");
+	return 0;
+	
+}

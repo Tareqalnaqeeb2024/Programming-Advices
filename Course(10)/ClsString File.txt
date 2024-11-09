@@ -1,0 +1,489 @@
+
+
+	//ProgrammingAdvices.com
+	//Mohammed Abu-Hadhoud
+
+#pragma once
+
+#include <iostream>
+#include<vector>
+using namespace std;
+
+class clsString
+{
+
+private:
+	string _Value;
+	
+
+public:
+
+	clsString()
+	{
+
+		_Value = "";
+	}
+
+	clsString(string Value)
+	{
+
+		_Value = Value;
+	}
+
+
+	void SetValue(string Value) {
+		_Value = Value;
+	}
+
+	string GetValue() {
+		return _Value;
+	}
+
+	__declspec(property(get = GetValue, put = SetValue)) string Value;
+
+
+	static short CountWords(string S1)
+	{
+
+		string delim = " "; // delimiter  
+		short Counter = 0;
+		short pos = 0;
+		string sWord; // define a string variable  
+
+		// use find() function to get the position of the delimiters  
+		while ((pos = S1.find(delim)) != std::string::npos)
+		{
+			sWord = S1.substr(0, pos); // store the word   
+			if (sWord != "")
+			{
+				Counter++;
+			}
+
+			//erase() until positon and move to next word.
+			S1.erase(0, pos + delim.length());
+		}
+
+		if (S1 != "")
+		{
+			Counter++; // it counts the last word of the string.
+		}
+
+		return Counter;
+
+	}
+
+	short CountWords()
+	{
+		return CountWords(_Value);
+	}
+
+	static void PrintFristLetterOfEachLetter(string str)
+	{
+		bool IsFristLetter = true;
+		for (int i = 0; i < str.length(); i++)
+		{
+			if (str[i] != ' ' && IsFristLetter)
+			{
+				cout << str[i] << "  " << "\n";
+			}
+			IsFristLetter = (str[i] == ' ' ? true : false);
+		}
+
+	}
+
+	void PrintFristLetterOfEachLetter()
+	{
+		PrintFristLetterOfEachLetter(_Value);
+		
+	}
+
+	string PrintUuperLetterOfEachWord(string str)
+	{
+		bool IsFristLetter = true;
+		for (int i = 0; i < str.length(); i++)
+		{
+			if (str[i] != ' ' && IsFristLetter)
+			{
+				str[i] = toupper(str[i]);
+			}
+			IsFristLetter = (str[i] == ' ' ? true : false);
+		}
+		return str;
+
+	}
+
+	string PrintUuperLetterOfEachWord()
+	{
+
+		return PrintUuperLetterOfEachWord(_Value);
+	}
+
+static	string PrintLowerLetterOfEachWord(string str)
+	{
+		bool IsFristLetter = true;
+		for (int i = 0; i < str.length(); i++)
+		{
+			if (str[i] != ' ' && IsFristLetter)
+			{
+				str[i] = tolower(str[i]);
+			}
+			IsFristLetter = (str[i] == ' ' ? true : false);
+		}
+		return str;
+
+	}
+
+	string PrintLowerLetterOfEachWord()
+	{
+		return PrintLowerLetterOfEachWord(_Value);
+	}
+
+	 static char InvertLettres(char letter)
+	{
+		return isupper(letter) ? tolower(letter) : toupper(letter);
+
+	}
+
+	static short CountSmallLetter(string str)
+	 {
+		 short Count;
+
+		 for (int i = 0; i < str.length(); i++)
+		 {
+			 if (islower(str[i]))
+			 {
+				 Count++;
+
+			 }
+
+		 }
+		 return Count;
+
+	 }
+	short CountSmallLetter()
+	{
+		return CountSmallLetter(_Value);
+
+	}
+
+	static short CountCaptialLetter(string str)
+	 {
+		 short Count;
+
+		 for (int i = 0; i < str.length(); i++)
+		 {
+			 if (isupper(str[i]))
+			 {
+				 Count++;
+
+			 }
+
+		 }
+		 return Count;
+
+	 }
+	short CountCaptialLetter()
+	{
+		return CountCaptialLetter(_Value);
+	 }
+
+   static	short CountLetter(string str, char letter)
+	{
+		short Count = 0;
+		for (short i = 0; i < str.length(); i++)
+		{
+			if (str[i] == letter)
+			{
+				Count++;
+
+			}
+		}
+		return Count;
+
+	}
+
+   short CountLetter( char letter)
+   {
+
+	   return CountLetter(_Value, letter);
+   }
+
+   short CountLetterInCase(string str, char letter, bool matchcase = true)
+   {
+	   short Count = 0;
+	   for (short i = 0; i < str.length(); i++)
+	   {
+		   if (matchcase)
+
+		   {
+			   if (str[i] == letter)
+				   Count++;
+		   }
+		   else
+		   {
+			   if (tolower(str[i]) == tolower(letter))
+				   Count++;
+		   }
+
+	   }
+	   return Count;
+   }
+
+  static bool IsVowelLetter(char letter)
+   {
+	   letter = tolower(letter);
+
+	   return((letter == 'a') || (letter == 'e') || (letter == 'i') || (letter == 'o') || (letter == 'u'));
+
+
+
+   }
+
+   static short CountVowelLettr(string str)
+  {
+	  short count = 0;
+	  for (short i = 0; i < str.length(); i++)
+	  {
+		  if (IsVowelLetter(str[i]))
+		  {
+			  count++;
+		  }
+
+	  }
+	  return count;
+
+  }
+
+  short CountVowelLettr()
+  {
+	 return CountVowelLettr(_Value);
+  }
+
+  static void PrintAllVowelLettr(string str)
+  {
+
+	  for (short i = 0; i < str.length(); i++)
+	  {
+		  if (IsVowelLetter(str[i]))
+		  {
+			  cout << str[i] << "  ";
+		  }
+
+	  }
+
+
+  }
+
+  void PrintAllVowelLettr()
+  {
+	  PrintAllVowelLettr(_Value);
+
+  }
+
+  static void WordsOfString(string str)
+  {
+	  string deilmit = " ";
+
+	  short po = 0;
+	  string strword;
+
+	  while ((po = str.find(deilmit)) != std::string::npos)
+	  {
+		  strword = str.substr(0, po);
+		  if (strword != "")
+		  {
+			  cout << strword << endl;
+		  }
+		  str.erase(0, po + deilmit.length());
+
+	  }
+	  if (str != "")
+	  {
+		  cout << str << endl;
+	  }
+
+  }
+
+  void WordsOfString()
+  {
+	  WordsOfString(_Value);
+  }
+
+ static short CountWordOfString(string str)
+  {
+	  string deilmit = " ";
+	  int count = 0;
+
+	  short po = 0;
+	  string strword;
+
+	  while ((po = str.find(deilmit)) != std::string::npos)
+	  {
+		  strword = str.substr(0, po);
+		  if (strword != "")
+		  {
+			  count++;
+		  }
+		  str.erase(0, po + deilmit.length());
+
+	  }
+	  if (str != "")
+	  {
+		  count++;
+	  }
+	  return count;
+
+  }
+
+  short CountWordOfString()
+  {
+	  return CountWordOfString(_Value);
+  }
+
+  static vector<string> SplitWord(string str, string delimiter)
+  {
+	  short po = 0;
+	  vector<string>Vstring;
+
+	  string strword;
+
+	  while ((po = str.find(delimiter)) != std::string::npos)
+	  {
+		  strword = str.substr(0, po);
+		  if (strword != " ")
+		  {
+			  Vstring.push_back(strword);
+		  }
+		  str.erase(0, po + delimiter.length());
+
+	  }
+	  if (str != " ")
+	  {
+		  Vstring.push_back(str);
+	  }
+
+	  return Vstring;
+	 
+	 
+	
+
+  }
+
+  vector<string> SplitWord( string delimiter)
+  {
+	return  SplitWord(_Value, delimiter);
+  }
+
+  static string JoinString(vector<string> vstring, string deli)
+  {
+	  string st = " ";
+	  for (string s : vstring)
+	  {
+		  st = st + s + deli;
+	  }
+	  return st.substr(0, st.length() - deli.length());
+  }
+
+  static string JoinString(string arr[], short length, string deli)
+  {
+	 
+	  string st = "";
+	  for (int i = 0; i < length; i++)
+	  {
+		  st = st + arr[i] + deli;
+
+
+	  }
+	   return st.substr(0, st.length() - deli.length());
+
+  }
+
+  static string ReverseWordInString(string str)
+  {
+	  vector<string>vstring;
+
+	  string st2 = " ";
+	  vstring = SplitWord(str, " ");
+
+	  vector<string>::iterator iter = vstring.end();
+
+	  while (iter != vstring.begin())
+	  {
+		  --iter;
+
+		  st2 += *iter + " ";
+	  }
+
+	  st2 = st2.substr(0, st2.length() - 1);
+
+	  return st2;
+
+
+  }
+  string ReverseWordInString()
+  {
+	  return ReverseWordInString(_Value);
+
+  }
+
+ static string ReplaceWord(string str, string oldword, string newword)
+  {
+	  short po = str.find(oldword);
+
+	  while (po != std::string::npos)
+	  {
+		  str = str.replace(po, oldword.length(), newword);
+
+		  po = str.find(oldword);
+
+	  }
+
+	  return str;
+
+
+  }
+
+ string ReplaceWord(string sToReplcae, string sReplaceTo)
+ {
+	 return _Value = ReplaceWord(_Value, sToReplcae, sReplaceTo);
+
+ }
+
+
+  static string RemovePunctiuation(string str)
+ {
+	 string s = "";
+	 for (int i = 0; i < str.length(); i++)
+	 {
+		 if (!ispunct(str[i]))
+		 {
+			 s += str[i];
+
+		 }
+
+	 }
+
+	 return s;
+
+ }
+
+ string RemovePunctiuation()
+ {
+	 return RemovePunctiuation(_Value);
+ }
+  
+
+
+
+
+
+
+	
+
+
+
+
+
+
+};
+

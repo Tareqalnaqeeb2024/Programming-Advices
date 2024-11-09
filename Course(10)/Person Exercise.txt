@@ -1,0 +1,151 @@
+// Peroject Sample Calcutoter.
+//
+
+#include <iostream>
+#include<fstream>
+#include<string>
+#include<vector>
+using namespace std;
+class clsPerson
+{
+private:
+	int _ID;
+	string _FristName;
+	string _LastName;
+	string _FullName;
+	string _Email;
+	string _Phone;
+
+
+
+	
+
+	
+
+
+
+public:
+
+	 clsPerson(int ID ,string FristName, string LastName, string Email, string Phone)
+	{
+		_ID = ID;
+		_FristName = FristName;
+		_LastName =LastName;
+		_Email = Email;
+		_Phone = Phone;
+
+	}
+
+	int ID()
+	{
+		return _ID;
+	}
+
+	void SetFristName(string FristName)
+	{
+		_FristName = FristName;
+	}
+
+	string FristName()
+	{
+		return _FristName;
+	}
+
+
+	void SetFristLast(string LastName)
+	{
+		_LastName = LastName;
+	}
+
+	string LastName()
+	{
+		return _LastName;
+	}
+
+	string FullName()
+	{
+		return _FristName + " " + _LastName;
+	}
+
+	void SetEmali(string Email)
+	{
+		_Email = Email;
+	}
+
+	string Email()
+	{
+		return _Email;
+	}
+
+	void SetPhone(int Phone)
+	{
+		_Phone = Phone;
+	}
+
+	string Phone()
+	{
+		return _Phone;
+	}
+
+	void Print()
+	{
+		cout << "---------------------------\n";
+		cout << "  Person Info \n";
+		cout << "---------------------------\n";
+		cout << "ID         :" << _ID << endl;
+		cout << " FristName :" << _FristName << endl;
+		cout << "Last Name  : " << _LastName << endl;
+		cout << "FullName   : " << FullName() << endl;
+		cout << "Email      :" << _Email << endl;
+		cout << " Phone     :" << _Phone << endl;
+
+		cout << "---------------------------\n";
+
+
+
+	}
+
+	void SendEmail(string Subjct, string Body)
+	{
+		cout << "the follwing Email Send To  Email : " << _Email << endl;
+		cout << "Subject : " << Subjct << endl;
+		cout << "Body : "  << Body << endl;
+
+	}
+
+	void SendMessge(string Message)
+	{
+		cout << "the follwing massage Send To Phone : " << _Phone << endl;
+		cout << "Massege : " << Message << endl;
+	}
+
+	
+
+};
+
+
+
+int main()
+{
+	clsPerson Person(10, "Tareq", "Regah", "MyEmali2020@Gmail.com", "775379787");
+
+	Person.Print();
+	Person.SendEmail("Hi, ", "I am Here");
+	Person.SendMessge("Hello Every one");
+
+
+
+	
+	
+
+
+
+
+
+
+	system("pause>0");
+	
+	
+	return 0;
+}
+
