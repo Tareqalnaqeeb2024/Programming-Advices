@@ -1,0 +1,140 @@
+// ConsoleApplication4.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+
+#include <iostream>
+
+
+using namespace std;
+short ReadYear()
+{
+	int Year;
+	cout << " Please enter number  Of Year ? \n";
+	cin >> Year;
+	return Year;
+}
+short ReadMonth()
+{
+	short Month;
+	cout << "please enetr number of month ?\n";
+	cin >> Month;
+	return Month;
+}
+
+short ReadDay()
+{
+	short Day;
+	cout << " please enter number of day ? \n";
+	cin >> Day;
+	return Day;
+}
+
+
+
+bool IsLeapYear(int Number)
+{
+
+	return (Number % 4 == 0 && Number % 100 != 0 || Number % 400 == 0);
+
+
+}
+
+short NumberOfDaysInMonth(short Month, short Year)
+{
+	if (Month < 1 || Month > 12)
+	{
+		return 0;
+	}
+	
+	int DaysOfMonth[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+	for (short i = 1; i <= 12 ; i++)
+	{
+		return (Month == 2) ? (IsLeapYear(Year) ? 29 : 28) : DaysOfMonth[Month - 1];
+
+		
+	
+	}
+}
+
+
+
+short NumberOfDaysFromBagainingOfYear(short Day, short Month, short Year)
+{
+	short TotalDays = 0;
+
+	for (int i = 1; i <= Month - 1; i++)
+	{
+
+		TotalDays += NumberOfDaysInMonth(i, Year);
+
+		
+	}
+		 
+	TotalDays += Day;
+	
+	return TotalDays;
+}
+
+struct sDate
+{
+	short Year;
+	short Month;
+	short Day;
+};
+
+sDate GetDateFromDayOrderInYear(short DataOrderInYear, short Year)
+{
+	sDate Date;
+	short ReminaingDays = DataOrderInYear;
+	short MonthDays = 0;
+
+	Date.Year = Year;
+	Date.Month = 1;
+
+	while (true)
+	{
+		MonthDays = NumberOfDaysInMonth(Date.Month, Year);
+		if (ReminaingDays > MonthDays)
+		{
+			ReminaingDays -= MonthDays;
+			Date.Month++;
+
+
+		}
+		else
+		{
+			Date.Day = ReminaingDays;
+			break;
+		}
+
+	}
+	return Date;
+}
+
+
+int main()
+{
+	short Year = ReadYear();
+	short Month = ReadMonth();
+	short Day = ReadDay();
+	short DayOrderInYear = NumberOfDaysFromBagainingOfYear(Day, Month, Year);
+
+	cout << " Numbers of days from bagiaing of year "
+		<< NumberOfDaysFromBagainingOfYear(Day, Month, Year) << endl;
+
+	sDate Date;
+
+	Date = GetDateFromDayOrderInYear(DayOrderInYear, Year);
+
+	cout <<" Date accordeing to day order in year :"<< Date.Day << "/" << Date.Month << "/" << Date.Year << endl;
+	
+
+
+
+	
+
+
+	system("pause>0");
+
+	return 0;
+}

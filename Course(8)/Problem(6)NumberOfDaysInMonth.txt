@@ -1,0 +1,71 @@
+// ConsoleApplication4.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+
+#include <iostream>
+
+#include<iomanip>
+using namespace std;
+short ReadYear()
+{
+	int Year;
+	cout << " Please enter number  Of Year ? \n";
+	cin >> Year;
+	return Year;
+}
+
+short ReadMonth()
+{
+	short Month = 0;
+	cout << "Please enter Number Of Month ? \n ";
+	cin >> Month;
+	return Month;
+}
+
+bool IsLeapYear(int Number)
+{
+	
+		return (Number % 4 == 0 && Number % 100 != 0 || Number % 400 == 0);
+
+	
+}
+
+short NumbersOfDaysInYear(short year)
+{
+	return (IsLeapYear(year) ? 366 : 365);
+}
+
+short NumbersOfDaysInMonth(short year, short month)
+{
+	if (month < 1 || month > 12)
+	
+		return 0;
+
+		int NumbersOFDay[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+
+	    return  (month == 2)?( IsLeapYear(year) ? 29:28) : NumbersOFDay[month - 1];
+	
+}
+
+
+
+
+
+
+
+
+int main()
+{
+
+	short Year = ReadYear();
+	short Month = ReadMonth();
+
+
+	cout << " Numbers of days in [ " << Month << " ] =  "
+	 << NumbersOfDaysInMonth(Year,Month) << endl; 
+	
+
+	system("pause>0");
+
+	return 0;
+}

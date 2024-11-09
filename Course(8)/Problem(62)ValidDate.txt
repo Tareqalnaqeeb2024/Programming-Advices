@@ -1,0 +1,130 @@
+
+
+
+#include <iostream>
+
+
+using namespace std;
+
+struct sDate
+{
+	short Year;
+	short Month;
+	short Day;
+
+};
+
+
+bool IsLeapYear(int Number)
+{
+
+	return (Number % 4 == 0 && Number % 100 != 0 || Number % 400 == 0);
+
+
+}
+
+short NumberOfDaysInMonth(short Month, short Year)
+{
+	if (Month < 1 || Month > 12)
+	{
+		return 0;
+	}
+
+	int DaysOfMonth[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+	for (short i = 1; i <= 12; i++)
+	{
+		return (Month == 2) ? (IsLeapYear(Year) ? 29 : 28) : DaysOfMonth[Month - 1];
+
+
+
+	}
+}
+
+
+
+
+
+short ReadYear()
+{
+	int Year;
+	cout << " Please enter number  Of Year ? \n";
+	cin >> Year;
+	return Year;
+}
+short ReadMonth()
+{
+	short Month;
+	cout << "please enetr number of month ?\n";
+	cin >> Month;
+	return Month;
+}
+
+short ReadDay()
+{
+	short Day;
+	cout << " please enter number of day ? \n";
+	cin >> Day;
+	return Day;
+}
+
+
+sDate ReadFullDate()
+{
+	sDate Date;
+	Date.Day = ReadDay();
+	Date.Month = ReadMonth();
+	Date.Year = ReadYear();
+
+	return Date;
+}
+
+bool IsvalidDate(sDate Date)
+{
+	if (Date.Day < 1 || Date.Day > 31)
+		return false;
+	if (Date.Month > 12)
+		return false;
+	if (Date.Month == 2)
+	{
+		if (IsLeapYear(Date.Day))
+		{
+			if (Date.Day > 29)
+				return false;
+		}
+		else
+			if (Date.Day > 28)
+				return false;
+	}
+	short DaysMonths = NumberOfDaysInMonth(Date.Month, Date.Year);
+	if (Date.Day > DaysMonths)
+		return false;
+	return true;
+
+		
+}
+
+
+int main()
+{
+	cout << " \n **** Please enter date  **** ? \n";
+	sDate Date = ReadFullDate();
+	//-------------------//
+
+	if (IsvalidDate(Date))
+
+		cout << " yes , Is Valid Date :\n";
+
+	else
+
+		cout << " No , Is Not Valid Date \n";
+
+
+
+
+
+
+	system("pause>0");
+
+	return 0;
+}
+

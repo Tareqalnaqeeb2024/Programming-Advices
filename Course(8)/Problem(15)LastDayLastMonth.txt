@@ -1,0 +1,143 @@
+// ConsoleApplication4.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+
+#include <iostream>
+
+
+using namespace std;
+
+struct sDate
+{
+	short Year;
+	short Month;
+	short Day;
+
+};
+short ReadYear()
+{
+	int Year;
+	cout << " Please enter number  Of Year ? \n";
+	cin >> Year;
+	return Year;
+}
+short ReadMonth()
+{
+	short Month;
+	cout << "please enetr number of month ?\n";
+	cin >> Month;
+	return Month;
+}
+
+short ReadDay()
+{
+	short Day;
+	cout << " please enter number of day ? \n";
+	cin >> Day;
+	return Day;
+}
+
+short ReadAddingDays()
+{
+	short Day;
+	cout << " please enter number of day to adding  ? \n";
+	cin >> Day;
+	return Day;
+}
+
+sDate ReadFullDate()
+{
+	sDate Date;
+
+	Date.Year = ReadYear();
+	Date.Month = ReadMonth();
+	Date.Day = ReadDay();
+
+	return Date;
+}
+
+
+
+bool IsLeapYear(int Number)
+{
+
+	return (Number % 4 == 0 && Number % 100 != 0 || Number % 400 == 0);
+
+
+}
+
+short NumberOfDaysInMonth(short Month, short Year)
+{
+	if (Month < 1 || Month > 12)
+	{
+		return 0;
+	}
+	
+	int DaysOfMonth[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+	for (short i = 1; i <= 12 ; i++)
+	{
+		return (Month == 2) ? (IsLeapYear(Year) ? 29 : 28) : DaysOfMonth[Month - 1];
+
+		
+	
+	}
+}
+
+
+
+
+
+
+
+bool IsLastDay(sDate Date )
+{
+	return (Date.Day == NumberOfDaysInMonth(Date.Month, Date.Year));
+
+}
+
+bool IsLastMonth(sDate Date)
+{
+	return (Date.Month == 12);
+}
+
+
+int main()
+{
+	sDate Date = ReadFullDate();
+	
+
+	
+
+	if (IsLastDay(Date))
+	{
+		cout << " yes;  Day Is last Day In Month 2\n";
+	}
+	else
+	{
+		cout << " no , Day Is NOT Last Day In Month  \n";
+
+	}
+
+
+	if (IsLastMonth(Date))
+	{
+		cout << " yes ; Month Is Last Month In Year \n";
+
+	}
+	else
+	{
+		cout << " no ; Month Is NOT Last Month In Year \n";
+	}
+
+	
+	
+
+
+
+	
+
+
+	system("pause>0");
+
+	return 0;
+}

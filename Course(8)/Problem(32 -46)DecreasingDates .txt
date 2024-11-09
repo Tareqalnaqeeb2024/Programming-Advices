@@ -1,0 +1,317 @@
+// ConsoleApplication4.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+
+#include <iostream>
+
+
+using namespace std;
+
+struct sDate
+{
+	short Year;
+	short Month;
+	short Day;
+
+};
+short ReadYear()
+{
+	int Year;
+	cout << " Please enter number  Of Year ? \n";
+	cin >> Year;
+	return Year;
+}
+short ReadMonth()
+{
+	short Month;
+	cout << "please enetr number of month ?\n";
+	cin >> Month;
+	return Month;
+}
+
+short ReadDay()
+{
+	short Day;
+	cout << " please enter number of day ? \n";
+	cin >> Day;
+	return Day;
+}
+
+
+
+sDate ReadFullDate()
+{
+	sDate Date;
+
+	Date.Year = ReadYear();
+	Date.Month = ReadMonth();
+	Date.Day = ReadDay();
+
+	return Date;
+}
+
+
+
+bool IsLeapYear(int Number)
+{
+
+	return (Number % 4 == 0 && Number % 100 != 0 || Number % 400 == 0);
+
+
+}
+
+short NumberOfDaysInMonth(short Month, short Year)
+{
+	if (Month < 1 || Month > 12)
+	{
+		return 0;
+	}
+
+	int DaysOfMonth[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+	for (short i = 1; i <= 12; i++)
+	{
+		return (Month == 2) ? (IsLeapYear(Year) ? 29 : 28) : DaysOfMonth[Month - 1];
+
+
+
+	}
+}
+bool IsLastDay(sDate Date)
+{
+	return (Date.Day == NumberOfDaysInMonth(Date.Month, Date.Year));
+
+}
+
+bool IsLastMonth(short Month)
+{
+	return (Month == 12);
+}
+
+
+sDate DecreasingDateByOne(sDate Date)
+{
+	if (Date.Day ==1)
+	{
+		if (Date.Month == 1)
+		{
+			Date.Day = 31;
+			Date.Month = 12;
+			Date.Year--;
+
+		}
+		else
+		{
+			Date.Day = NumberOfDaysInMonth(Date.Month,Date.Year);
+			Date.Month--;
+		}
+
+	}
+	else
+	{
+		Date.Day--;
+	}
+
+	return Date;
+
+}
+
+
+
+sDate DecreasingDateByXDays(sDate Date, short XDays)
+{
+	for ( int i = 1;  i <= XDays;  i++)
+	{
+		Date = DecreasingDateByOne(Date);
+
+	}
+
+	return Date;
+}
+
+sDate DecreasingDateByWeek(sDate Date )
+{
+	for (int i = 1; i <= 7; i++)
+	{
+		Date = DecreasingDateByOne(Date);
+
+	}
+
+	return Date;
+}
+
+sDate DecreasingDateByXWeek(sDate Date, short Weeks)
+{
+	for (int i = 1; i <= Weeks; i++)
+	{
+		Date = DecreasingDateByWeek(Date);
+
+	}
+	return Date;
+}
+
+sDate DecreasingDateByOneMonth(sDate Date)
+{
+	if (Date.Month == 1)
+
+	{
+		Date.Year--;
+		Date.Month = 12;
+
+	}
+	else
+	{
+		Date.Month--;
+	}
+
+	short NumberOfDaysInCurrentMonth = NumberOfDaysInMonth(Date.Month, Date.Year);
+	if (Date.Day > NumberOfDaysInCurrentMonth )
+	{
+		Date.Day = NumberOfDaysInCurrentMonth;
+
+	}
+
+	return Date;
+}
+
+sDate DecreasingDateByXMonth(sDate Date, short xMonth)
+{
+	for (int i = 1; i <= xMonth; i++)
+	{
+		Date = DecreasingDateByOneMonth(Date);
+	}
+	
+	return Date;
+}
+
+sDate DecreasingDateByYear(sDate Date )
+{
+	Date.Year--;
+
+	return Date;
+}
+
+sDate IncreasingDateByXYear(sDate Date, short xYear)
+{
+	for (int i = 1; i <= xYear; i++)
+	{
+		Date = DecreasingDateByYear(Date);
+	}
+
+	return Date;
+}
+sDate DecreasingDateByXYearFaster(sDate Date, short xYear)
+{
+	Date.Year -= xYear;
+
+	return Date;
+}
+sDate DecreasingDateByDecade(sDate Date )
+{
+	Date.Year -= 10;
+
+	return Date;
+}
+sDate DecreasingDateByXDecades(sDate Date , short Decades)
+{
+	for (int i = 1; i <= Decades * 10; i++)
+	{
+		Date = DecreasingDateByYear(Date);
+	}
+
+	return Date;
+}
+
+sDate DecreasingDateByXDecadeFaster(sDate Date ,short Decade)
+{
+	Date.Year -= Decade * 10;
+
+	return Date;
+}
+
+sDate DecreasingDateByOneCentury(sDate Date)
+{
+	Date.Year -= 100;
+
+	return Date;
+}
+
+sDate DecreasingDateByMillennium(sDate Date)
+{
+	Date.Year -= 1000;
+
+	return Date;
+}
+
+
+
+
+
+
+
+
+int main()
+{
+	sDate Date = ReadFullDate();
+
+	
+	cout << " #0 Date after decreasing one Day ";
+	Date = DecreasingDateByOne(Date);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+	cout << " #1 Date after decreasing one X Days :";
+	Date = DecreasingDateByXDays(Date , 10);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+	
+	cout << " #2 Date after decreasing one Week :";
+	Date = DecreasingDateByWeek(Date);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #2 Date after decreasing X Weekks :";
+	Date = DecreasingDateByXWeek(Date,10);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #4 Date after decreasing one  Month  :";
+	Date = DecreasingDateByOneMonth(Date);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #5 Date after decreasing X Month  :";
+	Date = DecreasingDateByXMonth(Date,5);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #6  Date after decreasing one year :";
+	Date = DecreasingDateByYear(Date);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #7 Date after decreasing X Years :";
+	Date = IncreasingDateByXYear(Date,10);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #8 Date after decreasing X Years Faster :";
+	Date = DecreasingDateByXYearFaster(Date,10);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #9 Date after decreasing one Decade :";
+	Date = DecreasingDateByDecade(Date);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #10 Date after decreasing  X Decades :";
+	Date = DecreasingDateByXDecades(Date,10);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #11  Date after decreasing X Decades Faster :";
+	Date = DecreasingDateByXDecadeFaster(Date,10);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #12 Date after decreasing century :";
+	Date = DecreasingDateByOneCentury(Date);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #13 Date after decreasing one Day Millennium :";
+	Date = DecreasingDateByMillennium(Date);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	
+
+	system("pause>0");
+
+	return 0;
+}

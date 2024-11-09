@@ -1,0 +1,983 @@
+//Second Time
+//
+
+
+
+#include<string>
+#include <iostream>
+#include<vector>
+#include<fstream>
+#include<iomanip>
+using namespace std;
+
+enum enATMOperation
+{
+	enQuickWithdraw = 1, enNormalWithdraw = 2, enDeposite =3, enTotalBalance = 4, enExit = 5
+
+};
+
+
+
+const string ClintsFlieName = "Clints.txt";
+void ShowNormalWithdrawScreen();
+
+void ShowQuickWithdraw();
+void ShowDepositScreen();
+void Login();
+void ShowATMScreen();
+
+void ShowATMScreen();
+struct  stClintData
+{
+	string Name;
+	string Phone;
+	string AccountNumber;
+	string PinCode;
+	double AccountBalnce;
+	bool MarkForDelete = false;
+
+};
+stClintData CurrentClient;
+
+vector<string>SplitString(string str, string seper)
+{
+	vector<string>VClinets;
+	int po = 0;
+	string sword;
+
+	while ((po = str.find(seper)) != std::string::npos)
+	{
+		sword = str.substr(0, po);
+		if (sword != "")
+		{
+			VClinets.push_back(sword);
+
+
+		}
+		str.erase(0, po + seper.length());
+	}
+	if (str != "")
+	{
+		VClinets.push_back(str);
+
+	}
+	return VClinets;
+}
+
+stClintData ConvertLineToRecord(string line, string seper = "//")
+{
+	vector<string>VClients;
+	stClintData sClinets;
+
+	VClients = SplitString(line, seper);
+	sClinets.Name = VClients[0];
+	sClinets.Phone = VClients[1];
+	sClinets.AccountNumber = VClients[2];
+	sClinets.PinCode = VClients[3];
+	sClinets.AccountBalnce = stod(VClients[4]);
+
+	return sClinets;
+
+
+}
+
+string ConvertRecordToLine(stClintData line, string seper = "//")
+{
+	string stClientsRecord = "";
+
+	stClientsRecord += line.Name + seper;
+	stClientsRecord += line.Phone + seper;
+	stClientsRecord += line.AccountNumber + seper;
+	stClientsRecord += line.PinCode + seper;
+	stClientsRecord += to_string(line.AccountBalnce);
+
+	return stClientsRecord;
+
+
+
+
+}
+
+
+
+
+vector<stClintData> LoadDataClientsFormFile(string FileName)
+{
+	vector<stClintData> VClinets;
+	fstream MyFile;
+	MyFile.open(FileName, ios::in);
+	if (MyFile.is_open())
+
+	{
+		string Line;
+		stClintData Clinets;
+		while (getline(MyFile, Line))
+		{
+			Clinets = ConvertLineToRecord(Line);
+			VClinets.push_back(Clinets);
+
+
+		}
+		MyFile.close();
+	}
+	return VClinets;
+
+
+
+
+
+
+}
+
+
+
+
+
+
+vector<stClintData>SaveClientsDataToFile(string FileName, vector<stClintData> vClients)
+{
+	fstream MyFile;
+	MyFile.open(FileName, ios::out);
+
+	string DataLine;
+	if (MyFile.is_open())
+	{
+		for (stClintData C : vClients)
+		{
+			if (C.MarkForDelete == false)
+			{
+				DataLine = ConvertRecordToLine(C);
+				MyFile << DataLine << endl;
+
+			}
+		}
+		MyFile.close();
+	}
+
+
+	return vClients;
+}
+
+
+
+
+
+
+void ShowEndScreen()
+{
+	cout << "  ------------------------------ \n";
+	cout << " **** End Screen :-)********\n ";
+	cout << "  ------------------------------ \n";
+
+}
+
+void GoBackToMainMenu()
+{
+	cout << " press eny key To Go Back TO Main Menu \n";
+	system("pause>0");
+	ShowATMScreen();
+
+}
+short ReadOperationType()
+{
+	short OperationType = 0;
+	do
+	{
+		cout << " choose one Opreration type  ?\n";
+		cin >> OperationType;
+
+
+	} while (OperationType < 1 || OperationType > 5);
+
+	return OperationType;
+
+}
+
+
+bool DepositFunction(string AccountNumber, double Amount, vector<stClintData>& vClient)
+{
+
+	char Anwser = 'n';
+
+
+	cout << " Are you Sure  To Perform   This Transaction ? y/n \n";
+	cin >> Anwser;
+	if (Anwser == 'y' || Anwser == 'Y')
+	{
+		for (stClintData& C : vClient)
+		{
+			if (C.AccountNumber == AccountNumber)
+			{
+				 C.AccountBalnce +=Amount;
+				SaveClientsDataToFile(ClintsFlieName, vClient);
+				cout << " Done Transaction  successfully .. you Current Balance ( " << C.AccountBalnce << " )";
+
+				return true;
+
+
+			}
+
+		}
+
+		return false;
+	}
+
+}
+
+
+
+
+int ReadQuickWithdraw()
+{
+	int QuickWhithdraw = 0;
+	cout << " Choose one Quickwithdarw [1] [9] ?\n";
+	cin >> QuickWhithdraw;
+	while (QuickWhithdraw <1  || QuickWhithdraw > 9)
+	{
+		cout << " Choose one Quickwithdarw [1] [9]?\n";
+		cin >> QuickWhithdraw;
+
+	}
+
+	return QuickWhithdraw;
+}
+int GetQuickWithdraw(int QuickWithdraw)
+{
+	switch (QuickWithdraw)
+	{
+	case 1:
+	 return 50;
+	case 2:
+		return 100;
+
+	case 3:
+		return 500;
+
+	case 4:
+		return 1000;
+
+	case 5:
+		return 2000;
+	case 6:
+		return 4000;
+	case 7:
+		return 6000;
+	case 8:
+		return 7000;
+	default:
+		return 0;
+
+	}
+}
+
+void PerformationQuickWitdraw(int QuickWithdraw)
+{
+
+	
+	double Quick = GetQuickWithdraw(QuickWithdraw);
+	if (Quick == 9)
+		cout << "pause >0";
+
+	if (Quick> CurrentClient.AccountBalnce)
+	{
+		cout << " sorry your oepration Amount  " << Quick << " exceeds  " << CurrentClient.AccountBalnce <<" Make another choice"<<  endl;
+		ShowQuickWithdraw();
+		return;
+
+
+	}
+
+	vector<stClintData> vClient = LoadDataClientsFormFile(ClintsFlieName);
+
+
+	DepositFunction(CurrentClient.AccountNumber, Quick * -1, vClient);
+	CurrentClient.AccountBalnce -=Quick;
+	
+
+}
+void ShowQuickWithdraw()
+{
+	cout << "  ------------------------------ \n";
+	cout << " \ Quick Whithdraw \n";
+	cout << "  ------------------------------ \n";
+	cout << " Choose One oepration [1] [9] ?\n";
+	cout << " [1]=50 t\t\t\\t [2]=100 \n";
+	cout << " [3]=500 t\t\t\\t[4]=1000 \n";
+	cout << " [5]=2000 t\t\t\\t[6]=4000 \n";
+	cout << " [7]=5000 t\t\t\\t [8]=7000 \n";
+	cout << " [9]=exsit t\t\t\\t \n";
+	cout << "your new Balance is" << CurrentClient.AccountBalnce;
+
+	PerformationQuickWitdraw(ReadQuickWithdraw());
+
+}
+int ReadNormalWithdraw()
+{
+	int Amount = 0;
+	cout << " please enter  Amount Amount Multiple By 5 ? \n";
+	cin >> Amount;
+	while (Amount % 5 != 0)
+	{
+		cout << " please enter Positive Amount Amount  Multiple By 5 ? \n";
+		cin >> Amount;
+	}
+
+	return Amount;
+
+
+}
+
+void PerformationNormalwithdraw()
+{
+	double NormalWithdraw = ReadNormalWithdraw();
+	if (NormalWithdraw > CurrentClient.AccountBalnce)
+	{
+		cout << " sorry your oepration Amount  " << NormalWithdraw << " exceeds " << CurrentClient.AccountBalnce << endl;
+		ReadNormalWithdraw();
+		return;
+
+	}
+	vector<stClintData> vClient = LoadDataClientsFormFile(ClintsFlieName);
+	DepositFunction(CurrentClient.AccountNumber, NormalWithdraw * -1, vClient);
+	 CurrentClient.AccountBalnce-= NormalWithdraw  ;
+	//cout << "your new Balance is" <<  CurrentClient.AccountBalnce<< endl;
+
+
+
+		
+}
+
+void ShowNormalWithdrawScreen()
+{
+	cout << "  ------------------------------ \n";
+	cout << " ****  Normal Withdraw ********\n ";
+	cout << "  ------------------------------ \n";
+	PerformationNormalwithdraw();
+}
+
+double ReadDeposit()
+{
+	double Deposit = 0;
+
+	cout << " enetr amonut to Deposite ?\n";
+	cin >> Deposit;
+	return Deposit;
+}
+
+void PerformationDepositOepartion()
+{
+	
+	double Amonut = ReadDeposit();
+	
+	
+	vector <stClintData> vClient = LoadDataClientsFormFile(ClintsFlieName);
+	DepositFunction(CurrentClient.AccountNumber, Amonut, vClient);
+	CurrentClient.AccountBalnce+= Amonut ;
+	cout << "your new Balance is  : " <<  CurrentClient.AccountBalnce  << endl;
+
+
+
+}
+
+void ShowDepositScreen()
+{
+	cout << "  ------------------------------ \n";
+	cout << " **** Deposite Screen ********\n ";
+	cout << "  ------------------------------ \n";
+
+
+	
+	PerformationDepositOepartion();
+	cout << "your new Balance is" << "  "<<CurrentClient.AccountBalnce << endl;
+
+
+
+
+
+
+}
+
+
+
+void ShowTotalBalanceScreen()
+{
+	cout << "  ------------------------------ \n";
+	cout << " **** Check Balnce Screen ********\n ";
+	cout << "  ------------------------------ \n";
+	cout << " your balance is :  " << CurrentClient.AccountBalnce;
+}
+
+short ReadTransactionOparetion()
+{
+	short Tran = 0;
+	do
+	{
+		cout << " Please enter  From [1] To [5] \n";
+		cin >> Tran;
+
+
+	} while (Tran < 1 || Tran > 5);
+
+
+	return Tran;
+
+
+
+}
+
+void GoBackToMainMenueScreen()
+{
+	cout << "Press any key to come back ?? ";
+	system("pause > 0");
+	ShowATMScreen();
+}
+
+void PerfromationATMOption(enATMOperation Transaction)
+{
+	switch (Transaction)
+	{
+	case enATMOperation::enQuickWithdraw:
+		system("cls");
+		ShowQuickWithdraw();
+		GoBackToMainMenueScreen();
+		break;
+
+	case enATMOperation::enNormalWithdraw:
+		system("cls");
+		ShowNormalWithdrawScreen();
+		GoBackToMainMenueScreen();
+		break;
+	case enATMOperation::enDeposite:
+		system("cls");
+		ShowDepositScreen();
+		GoBackToMainMenueScreen();
+	case enATMOperation::enTotalBalance:
+		system("cls");
+		ShowTotalBalanceScreen();
+		GoBackToMainMenueScreen();
+		break;
+
+	case enATMOperation::enExit:
+		system("cls");
+		Login();
+		break;
+
+
+	}
+
+
+}
+
+
+
+
+
+
+
+bool FindClientByAccountNumberAndPincode(string AccountNumber, string Pincode, stClintData& Client)
+{
+	vector<stClintData> vClient = LoadDataClientsFormFile(ClintsFlieName);
+
+	for (stClintData C : vClient)
+	{
+		if (C.AccountNumber == AccountNumber && C.PinCode == Pincode)
+		{
+			 Client = C;
+			return true;
+
+		}
+	}
+	return false;
+
+}
+
+bool LoadClientData(string AccountNumber , string Pincode)
+{
+	if (FindClientByAccountNumberAndPincode(AccountNumber, Pincode, CurrentClient))
+	
+		return true;
+	
+	return false;
+}
+void ShowATMScreen()
+{
+	cout << "  ------------------------------ \n";
+	cout << " **** ATM Menu Screen *******\n ";
+	cout << "  ------------------------------ \n";
+	cout << "[1] QuickWithdraw.\n";
+	cout << "[2] NormalWhithdraw.\n";
+	cout << "[3] Deposite.\n";
+	cout << "[4] Total Balnace.\n";
+	cout << "[5] Go Back To Main Manu.\n";
+	PerfromationATMOption((enATMOperation)ReadTransactionOparetion());
+
+}
+
+
+void Login()
+{
+	bool FailedLogin = false;
+
+	string AccountNumber, PinCode;
+
+	do
+	{
+	cout << "  ------------------------------ \n";
+	cout << " **** Login Screen *******\n ";
+	cout << "  ------------------------------ \n";
+
+	  if (FailedLogin)
+	  {
+		cout << " Invailed AccountNumber/PinCode\n";
+	  }
+	
+		cout << " please enter AccountNumber ?\n";
+		cin >> AccountNumber;
+
+		cout << " please enter PinCode?\n";
+		cin >> PinCode;
+
+		FailedLogin = !LoadClientData(AccountNumber, PinCode);
+
+	} while (FailedLogin);
+
+	ShowATMScreen();
+
+
+	
+
+
+}
+
+
+
+
+
+
+
+
+int main()
+{
+	Login();
+	system("pause>0");
+
+	return 0;
+}
+bool DepositFunction(string AccountNumber, double Amount, vector<stClintData> & vClient)
+{
+
+	char Anwser = 'n';
+
+
+	cout << " Are you Sure  To Perform   This Transaction ? y/n \n";
+	cin >> Anwser;
+	if (Anwser == 'y' || Anwser == 'Y')
+	{
+		for (stClintData& C : vClient)
+		{
+			if (C.AccountNumber == AccountNumber)
+			{
+				C.AccountBalnce += Amount;
+				SaveClientsDataToFile(ClintsFlieName, vClient);
+				cout << " Done Transaction  successfully .. you Current Balance ( " << C.AccountBalnce << " )";
+
+				return true;
+
+
+			}
+
+		}
+
+		return false;
+	}
+
+}
+
+void PrintClientRecordBalaceLine(stClintData Client)
+{
+	cout << "| " << setw(15) << left << Client.AccountNumber;
+	cout << "| " << setw(40) << left << Client.Name;
+	cout << "| " << setw(12) << left << Client.AccountBalnce;
+}
+
+
+
+void ShowTotalBalance()
+{
+	vector<stClintData> vClient = LoadDataClientsFormFile(ClintsFlieName);
+
+
+
+
+	cout << "\n\t\t\t\t\t (" << vClient.size() << ") Clints";
+
+	cout <<
+		"\n________________________________________________________________________";
+	cout << "______________________________________________________________________\n" << endl;
+	cout << "| " << left << setw(15) << "Accout Number";
+	cout << "| " << left << setw(40) << "Client Name";
+	cout << "| " << left << setw(12) << "Balance";
+
+	cout <<
+		"\n________________________________________________________________________";
+	cout << "______________________________________________________________________\n" << endl;
+	double TotalBalance = 0;
+	if (vClient.size() == 0)
+		cout << "  there are not Clients in File ):-..\n";
+	else
+
+
+
+		for (stClintData client : vClient)
+		{
+
+			PrintClientRecordBalaceLine(client);
+			TotalBalance += client.AccountBalnce;
+
+			cout << endl;
+
+
+
+
+		}
+
+
+
+	cout <<
+		"\n________________________________________________________________________";
+	cout << "______________________________________________________________________\n" << endl;
+
+	cout << "\t\t\t\t Total Acoount Balance = " << TotalBalance << endl;
+
+
+
+
+
+}
+int ReadQuickWithdraw()
+{
+	int QuickWhithdraw = 0;
+	cout << " Choose one Quickwithdarw [1] [9] ?\n";
+	cin >> QuickWhithdraw;
+	while (QuickWhithdraw > 10)
+	{
+		cout << " Choose one Quickwithdarw [1] [2]?\n";
+		cin >> QuickWhithdraw;
+
+	}
+
+	return QuickWhithdraw;
+}
+int GetQuickWithdraw(int QuickWithdraw)
+{
+	switch (QuickWithdraw)
+	{
+	case 1:
+	 return 50;
+	case 2:
+		return 100;
+
+	case 3:
+		return 500;
+
+	case 4:
+		return 1000;
+
+	case 5:
+		return 2000;
+	case 6:
+		return 4000;
+	case 7:
+		return 6000;
+	case 8:
+		return 7000;
+	case 9:
+		return 0;
+
+	}
+}
+
+void PerformationQuickWitdraw(int QuickWithdraw)
+{
+
+	
+	double Quick = GetQuickWithdraw(QuickWithdraw);
+	if (Quick = 9)
+		cout << "pause >0";
+
+	if (Quick> CurrentClient.AccountBalnce)
+	{
+		cout << " sorry your oepration Amount  " << Quick << " exceeds " << CurrentClient.AccountBalnce << endl;
+		ShowQuickWithdraw();
+		return;
+
+
+	}
+
+	vector<stClintData> vClient = LoadDataClientsFormFile(ClintsFlieName);
+
+
+	DepositFunction(CurrentClient.AccountNumber, Quick * -1, vClient);
+	//cout << "your new Balance is" << Quick -= CurrentClient.AccountBalnce  ;
+
+}
+void ShowQuickWithdraw()
+{
+	cout << "  ------------------------------ \n";
+	cout << " \t\t\t\t\t Quick Whithdraw \t\t\t\t\n";
+	cout << "  ------------------------------ \n";
+	cout << " Choose One oepration [1] [9] ?\n";
+	cout << " [1]=50 t\t\t\\t [2]=100 \n";
+	cout << " [3]=500 t\t\t\\t[4]=1000 \n";
+	cout << " [5]=2000 t\t\t\\t[6]=4000 \n";
+	cout << " [7]=5000 t\t\t\\t [8]=7000 \n";
+	cout << " [9]=exsit t\t\t\\t \n";
+
+	PerformationQuickWitdraw(ReadQuickWithdraw());
+
+}
+int ReadHowMuchToWithdraw()
+{
+	int Amount = 0;
+	cout << " please enter  Amount Amount Multiple By 5 ? \n";
+	cin >> Amount;
+	while (Amount % 5 != 0)
+	{
+		cout << " please enter Positive Amount Amount  Multiple By 5 ? \n";
+		cin >> Amount;
+	}
+
+	return Amount;
+
+
+}
+
+void PerformationNormalwithdraw()
+{
+	double NormalWithdraw = ReadHowMuchToWithdraw();
+	if (NormalWithdraw > CurrentClient.AccountBalnce)
+	{
+		cout << " sorry your oepration Amount  " << NormalWithdraw << " exceeds " << CurrentClient.AccountBalnce << endl;
+		ReadHowMuchToWithdraw();
+		return;
+
+	}
+	vector<stClintData> vClient = LoadDataClientsFormFile(ClintsFlieName);
+	DepositFunction(CurrentClient.AccountNumber, NormalWithdraw * -1, vClient);
+	//cout << "your new Balance is" << NormalWithdraw -= CurrentClient.AccountBalnce<< endl;
+
+
+
+		
+}
+
+void ShowNormalWithdrawScreen()
+{
+	cout << "  ------------------------------ \n";
+	cout << " ****  Normal Withdraw ********\n ";
+	cout << "  ------------------------------ \n";
+	PerformationNormalwithdraw();
+}
+
+double ReadDeposit()
+{
+	double Deposit = 0;
+
+	cout << " enetr amonut to Deposite ?\n";
+	cin >> Deposit;
+	return Deposit;
+}
+
+void PerformationDepositOepartion()
+{
+	double Amonut = ReadDeposit();
+	
+	if (Amonut > CurrentClient.AccountBalnce)
+	{
+		cout << " sorry your oepration Amount  " << Amonut << " exceeds " << CurrentClient.AccountBalnce << endl;
+		ReadDeposit();
+		return;
+
+
+	}
+	vector <stClintData> vClient = LoadDataClientsFormFile(ClintsFlieName);
+	DepositFunction(CurrentClient.AccountNumber, Amonut, vClient);
+
+	//cout << "your new Balance is" << Amonut += CurrentClient.AccountBalnce << endl;
+
+
+
+}
+
+void ShowDepositScreen()
+{
+	cout << "  ------------------------------ \n";
+	cout << " **** Deposite Screen ********\n ";
+	cout << "  ------------------------------ \n";
+
+
+	
+
+	PerformationDepositOepartion();
+
+
+
+
+}
+
+
+
+void ShowTotalBalanceScreen()
+{
+	cout << " your balance is" << CurrentClient.AccountBalnce;
+}
+
+short ReadTransactionOparetion()
+{
+	short Tran = 0;
+	do
+	{
+		cout << " Please enter  From [1] To [4] \n";
+		cin >> Tran;
+
+
+	} while (Tran < 1 || Tran > 5);
+
+
+	return Tran;
+
+
+
+}
+
+void GoBackToMainMenueScreen()
+{
+	cout << "Press any key to come back ?? ";
+	system("pause > 0");
+	ShowATMScreen();
+}
+
+void PerfromationATMOption(enATMOperation Transaction)
+{
+	switch (Transaction)
+	{
+	case enATMOperation::enQuickWithdraw:
+		system("cls");
+		ShowQuickWithdraw();
+		GoBackToMainMenueScreen();
+		break;
+
+	case enATMOperation::enNormalWithdraw:
+		system("cls");
+		ShowNormalWithdrawScreen();
+		GoBackToMainMenueScreen();
+		break;
+	case enATMOperation::enTotalBalance:
+		system("cls");
+		ShowTotalBalanceScreen();
+		GoBackToMainMenueScreen();
+		break;
+
+	case enATMOperation::enExit:
+		system("cls");
+		ShowATMScreen();
+		break;
+
+
+	}
+
+
+}
+
+
+
+
+
+
+
+bool FindClientByAccountNumberAndPincode(string AccountNumber, string Pincode, stClintData& Client)
+{
+	vector<stClintData> vClient = LoadDataClientsFormFile(ClintsFlieName);
+
+	for (stClintData C : vClient)
+	{
+		if (C.AccountNumber == AccountNumber && C.PinCode == Pincode)
+		{
+			 Client = C;
+			return true;
+
+		}
+	}
+	return false;
+
+}
+
+bool LoadClientData(string AccountNumber , string Pincode)
+{
+	if (FindClientByAccountNumberAndPincode(AccountNumber, Pincode, CurrentClient))
+	
+		return true;
+	
+	return false;
+}
+void ShowATMScreen()
+{
+	cout << "  ------------------------------ \n";
+	cout << " **** ATM Menu Screen *******\n ";
+	cout << "  ------------------------------ \n";
+	cout << "[1] QuickWithdraw.\n";
+	cout << "[2] NormalWhithdraw.\n";
+	cout << "[3] Total Balnace.\n";
+	cout << "[4] Go Back To Main Manu.\n";
+	PerfromationATMOption((enATMOperation)ReadTransactionOparetion());
+
+}
+
+
+void Login()
+{
+	bool FailedLogin = false;
+
+	string AccountNumber, PinCode;
+	cout << "  ------------------------------ \n";
+	cout << " **** Login Screen *******\n ";
+	cout << "  ------------------------------ \n";
+
+	if (FailedLogin)
+	{
+		cout << " Invailed AccountNumber/PinCode\n";
+	}
+	do
+	{
+		cout << " please enter AccountNumber ?\n";
+		cin >> AccountNumber;
+
+		cout << " please enter PinCode?\n";
+		cin >> PinCode;
+
+		FailedLogin = !LoadClientData(AccountNumber, PinCode);
+
+	} while (FailedLogin);
+
+	ShowATMScreen();
+
+
+	
+
+
+}
+
+
+
+
+
+
+
+
+int main()
+{
+	Login();
+	system("pause>0");
+
+	return 0;
+}

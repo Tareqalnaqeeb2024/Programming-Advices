@@ -1,0 +1,68 @@
+// ConsoleApplication4.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include<string>
+#include <iostream>
+
+#include<iomanip>
+using namespace std;
+int ReadYear()
+{
+	int Year;
+	cout << " Please enter number ? \n";
+	cin >> Year;
+	return Year;
+}
+
+bool IsLeapYear(int Number)
+{
+	
+		return (Number % 4 == 0 && Number % 100 != 0 || Number % 400 == 0);
+
+	
+}
+
+short NumbersOfDaysInYear(short year)
+{
+	return (IsLeapYear(year) ? 366 : 365);
+}
+
+short NumbersOfHoursInYear(short year)
+{
+	return (NumbersOfDaysInYear(year) * 24);
+}
+
+int NumbersOfMinutesInYear(short year)
+{
+	return (NumbersOfHoursInYear(year) * 60);
+}
+int NumbersOfSecondsInYear(short year)
+{
+	return (NumbersOfMinutesInYear(year) * 60);
+}
+
+
+
+
+
+
+
+int main()
+{
+
+	short Year = ReadYear();
+
+	cout << " Numbers of days in [ " << Year << " ] =  ";
+	cout << NumbersOfDaysInYear(Year) << endl; 
+	cout << " Numbers Of Houres in [ " << Year << " ] = ";
+	cout << NumbersOfHoursInYear(Year) << endl;
+	cout << " Numbers of Minutes In [ " << Year << " ] = ";
+	cout << NumbersOfMinutesInYear(Year) << endl;
+	cout << " Numbers Of seconds In Year [ " << Year << " ] = ";
+	cout << NumbersOfSecondsInYear(Year) << endl;
+	
+
+	system("pause>0");
+
+	return 0;
+}

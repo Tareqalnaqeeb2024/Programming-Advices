@@ -1,0 +1,315 @@
+// ConsoleApplication4.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+
+#include <iostream>
+
+
+using namespace std;
+
+struct sDate
+{
+	short Year;
+	short Month;
+	short Day;
+
+};
+short ReadYear()
+{
+	int Year;
+	cout << " Please enter number  Of Year ? \n";
+	cin >> Year;
+	return Year;
+}
+short ReadMonth()
+{
+	short Month;
+	cout << "please enetr number of month ?\n";
+	cin >> Month;
+	return Month;
+}
+
+short ReadDay()
+{
+	short Day;
+	cout << " please enter number of day ? \n";
+	cin >> Day;
+	return Day;
+}
+
+
+
+sDate ReadFullDate()
+{
+	sDate Date;
+
+	Date.Year = ReadYear();
+	Date.Month = ReadMonth();
+	Date.Day = ReadDay();
+
+	return Date;
+}
+
+
+
+bool IsLeapYear(int Number)
+{
+
+	return (Number % 4 == 0 && Number % 100 != 0 || Number % 400 == 0);
+
+
+}
+
+short NumberOfDaysInMonth(short Month, short Year)
+{
+	if (Month < 1 || Month > 12)
+	{
+		return 0;
+	}
+
+	int DaysOfMonth[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+	for (short i = 1; i <= 12; i++)
+	{
+		return (Month == 2) ? (IsLeapYear(Year) ? 29 : 28) : DaysOfMonth[Month - 1];
+
+
+
+	}
+}
+bool IsLastDay(sDate Date)
+{
+	return (Date.Day == NumberOfDaysInMonth(Date.Month, Date.Year));
+
+}
+
+bool IsLastMonth(short Month)
+{
+	return (Month == 12);
+}
+
+
+sDate IncreasingDateByOne(sDate Date)
+{
+	if (IsLastDay(Date))
+	{
+		if (IsLastMonth(Date.Month))
+		{
+			Date.Day = 1;
+			Date.Month = 1;
+			Date.Year++;
+
+		}
+		else
+		{
+			Date.Day = 1;
+			Date.Month++;
+		}
+
+	}
+	else
+	{
+		Date.Day++;
+	}
+
+	return Date;
+
+}
+
+
+
+/*sDate IncreasingDateByXDays(sDate Date, short XDays)
+{
+	for ( int i = 1;  i <= XDays;  i++)
+	{
+		Date = IncreasingDateByOne(Date);
+
+	}
+
+	return Date;
+}*/
+
+sDate IncreasingDateByWeek(sDate Date )
+{
+	for (int i = 1; i <= 7; i++)
+	{
+		Date = IncreasingDateByOne(Date);
+
+	}
+
+	return Date;
+}
+
+sDate IncreasingDateByXWeek(sDate Date, short Weeks)
+{
+	for (int i = 1; i <= 7; i++)
+	{
+		Date = IncreasingDateByWeek(Date);
+
+	}
+	return Date;
+}
+
+sDate IncreasingDateByOneMonth(sDate Date)
+{
+	if (Date.Month == 12)
+
+	{
+		Date.Year++;
+		Date.Month = 1;
+
+	}
+	else
+	{
+		Date.Month++;
+	}
+
+	short NumberOfDaysInCurrentMonth = NumberOfDaysInMonth(Date.Month, Date.Year);
+	if (Date.Day > NumberOfDaysInCurrentMonth )
+	{
+		Date.Day = NumberOfDaysInCurrentMonth;
+
+	}
+
+	return Date;
+}
+
+sDate IncreasingDateByXMonth(sDate Date, short xMonth)
+{
+	for (int i = 1; i <= xMonth; i++)
+	{
+		Date = IncreasingDateByOneMonth(Date);
+	}
+	
+	return Date;
+}
+
+sDate IncreasingDateByYear(sDate Date )
+{
+	Date.Year++;
+
+	return Date;
+}
+
+sDate IncreasingDateByXYear(sDate Date, short xYear)
+{
+	for (int i = 1; i <= xYear; i++)
+	{
+		Date = IncreasingDateByYear(Date);
+	}
+
+	return Date;
+}
+sDate IncreasingDateByXYearFaster(sDate Date, short xYear)
+{
+	Date.Year += xYear;
+
+	return Date;
+}
+sDate IncreasingDateByDecade(sDate Date )
+{
+	Date.Year += 10;
+
+	return Date;
+}
+sDate IncreasingDateByXDecades(sDate Date , short Decades)
+{
+	for (int i = 1; i <= Decades * 10; i++)
+	{
+		Date = IncreasingDateByDecade(Date);
+	}
+
+	return Date;
+}
+
+sDate IncreasingDateByXDecadeFaster(sDate Date ,short Decade)
+{
+	Date.Year += Decade * 10;
+
+	return Date;
+}
+
+sDate IncreasingDateByOneCentury(sDate Date)
+{
+	Date.Year += 100;
+
+	return Date;
+}
+
+sDate IncreasingDateByMillennium(sDate Date)
+{
+	Date.Year += 1000;
+
+	return Date;
+}
+
+
+
+
+
+
+
+
+
+int main()
+{
+	sDate Date = ReadFullDate();
+
+	
+	cout << " #1 Date after inceasing one Day \n";
+	Date = IncreasingDateByOne(Date);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #2 Date after inceasing one Week \n";
+	Date = IncreasingDateByWeek(Date);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #2 Date after inceasing X Weekks \n";
+	Date = IncreasingDateByXWeek(Date,10);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #4 Date after inceasing one  Month  \n";
+	Date = IncreasingDateByOneMonth(Date);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #5 Date after inceasing X Month  \n";
+	Date = IncreasingDateByXMonth(Date,10);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #6  Date after inceasing one year \n";
+	Date = IncreasingDateByYear(Date);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #7 Date after inceasing X Years \n";
+	Date = IncreasingDateByXYear(Date,10);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #8 Date after inceasing X Years Faster \n";
+	Date = IncreasingDateByXYearFaster(Date,10);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #9 Date after inceasing one Decade \n";
+	Date = IncreasingDateByDecade(Date);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #10 Date after inceasing  X Decades \n";
+	Date = IncreasingDateByXDecades(Date,10);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #11  Date after inceasing X Decades Faster \n";
+	Date = IncreasingDateByXDecadeFaster(Date,10);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #12 Date after inceasing century \n";
+	Date = IncreasingDateByOneCentury(Date);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+	cout << " #13 Date after inceasing one Day Millennium \n";
+	Date = IncreasingDateByMillennium(Date);
+	cout << " Date : " << Date.Day << " / " << Date.Month << " /" << Date.Year << endl;
+
+
+
+	system("pause>0");
+
+	return 0;
+}

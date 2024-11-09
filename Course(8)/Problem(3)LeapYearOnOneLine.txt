@@ -1,0 +1,47 @@
+// ConsoleApplication4.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include<string>
+#include <iostream>
+
+#include<iomanip>
+using namespace std;
+int ReadYear()
+{
+	int Year;
+	cout << " Please enter number ? \n";
+	cin >> Year;
+	return Year;
+}
+
+bool IsLeapYear(int Number)
+{
+	
+		return (Number % 4 == 0 && Number % 100 != 0 || Number % 400 == 0);
+
+	
+}
+
+
+
+
+
+int main()
+{
+
+	int Year = ReadYear();
+
+	if (IsLeapYear(Year))
+	
+		 cout<< " \n yes ; year ( " << Year << " )  it is leap year \n";
+
+	
+	else
+	
+		 cout<< " \n no ; year ( " << Year << " )  it NOT is leap year \n";
+	
+
+	system("pause>0");
+
+	return 0;
+}

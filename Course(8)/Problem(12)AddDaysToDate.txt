@@ -1,0 +1,176 @@
+// ConsoleApplication4.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+
+#include <iostream>
+
+
+using namespace std;
+
+struct sDate
+{
+	short Year;
+	short Month;
+	short Day;
+
+};
+short ReadYear()
+{
+	int Year;
+	cout << " Please enter number  Of Year ? \n";
+	cin >> Year;
+	return Year;
+}
+short ReadMonth()
+{
+	short Month;
+	cout << "please enetr number of month ?\n";
+	cin >> Month;
+	return Month;
+}
+
+short ReadDay()
+{
+	short Day;
+	cout << " please enter number of day ? \n";
+	cin >> Day;
+	return Day;
+}
+
+short ReadAddingDays()
+{
+	short Day;
+	cout << " please enter number of day to adding  ? \n";
+	cin >> Day;
+	return Day;
+}
+
+sDate ReadFullDate()
+{
+	sDate Date;
+
+	Date.Year = ReadYear();
+	Date.Month = ReadMonth();
+	Date.Day = ReadDay();
+
+	return Date;
+}
+
+
+
+bool IsLeapYear(int Number)
+{
+
+	return (Number % 4 == 0 && Number % 100 != 0 || Number % 400 == 0);
+
+
+}
+
+short NumberOfDaysInMonth(short Month, short Year)
+{
+	if (Month < 1 || Month > 12)
+	{
+		return 0;
+	}
+	
+	int DaysOfMonth[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+	for (short i = 1; i <= 12 ; i++)
+	{
+		return (Month == 2) ? (IsLeapYear(Year) ? 29 : 28) : DaysOfMonth[Month - 1];
+
+		
+	
+	}
+}
+
+
+
+short NumberOfDaysFromBagainingOfYear(short Day, short Month, short Year)
+{
+	short TotalDays = 0;
+
+	for (int i = 1; i <= Month - 1; i++)
+	{
+
+		TotalDays += NumberOfDaysInMonth(i, Year);
+
+		
+	}
+		 
+	TotalDays += Day;
+	
+	return TotalDays;
+}
+
+
+
+sDate DateAddedDays(short Days, sDate Date)
+{
+	
+	short ReminaingDays = Days + NumberOfDaysFromBagainingOfYear(Date.Day,Date.Month,Date.Year) ;
+	short MonthDays = 0;
+	
+
+	
+	Date.Month = 1;
+
+	while (true)
+	{
+		MonthDays = NumberOfDaysInMonth(Date.Month, Date.Year);
+		if (ReminaingDays > MonthDays)
+		{
+			ReminaingDays -= MonthDays;
+			Date.Month++;
+			
+			if (Date.Month > 12 )
+			{
+				Date.Month = 1;
+				Date.Year++;
+				
+				
+
+
+			}
+			
+			
+
+		}
+		
+		else
+		{
+			Date.Day = ReminaingDays;
+			break;
+		}
+
+	}
+	return Date;
+}
+
+
+int main()
+{
+	sDate Date = ReadFullDate();
+	short Days = ReadAddingDays();
+
+	
+	
+
+
+	
+
+	 Date =DateAddedDays(Days, Date);
+	 cout << Days << endl;
+	cout <<" Date After Adding Days  :"<< Date.Day << "/" << Date.Month << "/" << Date.Year << endl;
+
+	
+	
+
+
+
+	
+
+
+	system("pause>0");
+
+	return 0;
+}

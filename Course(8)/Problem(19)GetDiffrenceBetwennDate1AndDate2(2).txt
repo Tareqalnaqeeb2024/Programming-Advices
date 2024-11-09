@@ -1,0 +1,212 @@
+// ConsoleApplication4.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+
+#include <iostream>
+
+
+using namespace std;
+
+struct sDate
+{
+	short Year;
+	short Month;
+	short Day;
+
+};
+short ReadYear()
+{
+	int Year;
+	cout << " Please enter number  Of Year ? \n";
+	cin >> Year;
+	return Year;
+}
+short ReadMonth()
+{
+	short Month;
+	cout << "please enetr number of month ?\n";
+	cin >> Month;
+	return Month;
+}
+
+short ReadDay()
+{
+	short Day;
+	cout << " please enter number of day ? \n";
+	cin >> Day;
+	return Day;
+}
+
+short ReadAddingDays()
+{
+	short Day;
+	cout << " please enter number of day to adding  ? \n";
+	cin >> Day;
+	return Day;
+}
+
+sDate ReadFullDate()
+{
+	sDate Date;
+
+	Date.Year = ReadYear();
+	Date.Month = ReadMonth();
+	Date.Day = ReadDay();
+
+	return Date;
+}
+
+
+
+bool IsLeapYear(int Number)
+{
+
+	return (Number % 4 == 0 && Number % 100 != 0 || Number % 400 == 0);
+
+
+}
+
+short NumberOfDaysInMonth(short Month, short Year)
+{
+	if (Month < 1 || Month > 12)
+	{
+		return 0;
+	}
+
+	int DaysOfMonth[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+	for (short i = 1; i <= 12; i++)
+	{
+		return (Month == 2) ? (IsLeapYear(Year) ? 29 : 28) : DaysOfMonth[Month - 1];
+
+
+
+	}
+}
+
+bool IsDateOneLessThanDateTwo(sDate Date1, sDate Date2)
+{
+
+	return (Date1.Year < Date2.Year) ? true : ((Date1.Year == Date2.Year) ? (Date1.Month < Date2.Month ? true :
+		(Date1.Month == Date2.Month ? Date1.Day < Date2.Day : false)) : false);
+
+}
+
+
+
+
+
+
+bool IsLastDay(sDate Date)
+{
+	return (Date.Day == NumberOfDaysInMonth(Date.Month, Date.Year));
+
+}
+
+bool IsLastMonth(short Month)
+{
+	return (Month == 12);
+}
+
+
+
+sDate IncreasingDateByOne(sDate Date)
+{
+	if (IsLastDay(Date))
+	{
+		if (IsLastMonth(Date.Month))
+		{
+			Date.Day = 1;
+			Date.Month = 1;
+			Date.Year++;
+
+		}
+		else
+		{
+			Date.Day = 1;
+			Date.Month++;
+		}
+
+	}
+	else
+	{
+		Date.Day++;
+	}
+
+	return Date;
+
+}
+
+void SweapDate(sDate &Date1, sDate &Date2)
+{
+	sDate TemDate;
+	TemDate.Year = Date1.Year;
+	TemDate.Month = Date1.Month;
+	TemDate.Day = Date1.Day;
+
+	Date1.Year = Date2.Year;
+	Date1.Month = Date2.Month;
+	Date1.Day = Date2.Day;
+
+
+	Date2.Year = TemDate.Year;
+	Date2.Month = TemDate.Month;
+	Date2.Day = TemDate.Day;
+}
+
+int GetDiffranceBetweenDate1AndDate2(sDate Date1, sDate Date2, bool EnculdeEndDay = false)
+{
+	int Days = 0;
+	short SweapFlagValue = 1;
+	if (!IsDateOneLessThanDateTwo(Date1, Date2))
+	{
+		SweapDate(Date1, Date2);
+		SweapFlagValue = -1;
+
+	}
+	while (IsDateOneLessThanDateTwo(Date1, Date2))
+	{
+		Days++;
+		Date1 = IncreasingDateByOne(Date1);
+
+
+		
+	}
+	return EnculdeEndDay ? ++Days  * SweapFlagValue : Days * SweapFlagValue  ;
+
+}
+
+
+
+
+
+
+
+
+int main()
+{
+	sDate Date1 = ReadFullDate();
+	sDate Date2 = ReadFullDate();
+
+
+	cout << " Differences Days between date1 and date2 :" << GetDiffranceBetweenDate1AndDate2(Date1, Date2) << "(Days)" << endl;
+
+	cout << " Differences Days between date1 and date2  whitn enculde end Day:" << GetDiffranceBetweenDate1AndDate2(Date1, Date2, true) << "(Days)" << endl;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	system("pause>0");
+
+	return 0;
+}

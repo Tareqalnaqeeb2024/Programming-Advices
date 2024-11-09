@@ -1,0 +1,91 @@
+// ConsoleApplication4.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include<string>
+#include <iostream>
+
+#include<iomanip>
+using namespace std;
+int ReadNumber()
+{
+	int Number;
+	cout << " Please enter number ? \n";
+	cin >> Number;
+	return Number;
+}
+
+string NumberToText(int Number)
+{
+	if (Number == 0)
+	{
+		return "";
+	}
+	if (Number >= 1 && Number <= 19)
+	{
+		string arry[] = { "" , " One" , " Two" , " Three" , " Four" , " Five" , "Six" , " Seven" , " Eight" , " Nine " ,"Ten" ,
+		" Eleven" , " Towelve" , " Threeteen" , " Fourteen" , " Fiveteen" , " Sixteen" , " Seventeen" , " Eighteen" , " Nineteen"
+		};
+
+		return arry[Number] + " ";
+	}
+	if (Number >= 20 && Number <= 99)
+	{
+		string arry[] = { " " , " " , " Twenty" , "Threety " , " Fourty" , " Fivty " , " Sixty" , " Seventy" , " Eighty" , " Ninety" };
+
+		return arry[Number / 10] + " " + NumberToText(Number % 10);
+	}
+	if (Number >= 100 && Number <= 199)
+	{
+		return  "One Hundred  " + NumberToText(Number % 100);
+	}
+	if (Number >= 200 && Number <= 999)
+	{
+
+		return NumberToText(Number / 100) + " Hundred" + NumberToText(Number % 100);
+	} 
+	if (Number >= 1000 && Number <= 1999)
+	{
+		return " One Thousend " + NumberToText(Number % 1000);
+	}
+	if (Number >= 2000 && Number <= 999999)
+	{
+		return NumberToText(Number / 1000) + " Thousend  " + NumberToText(Number % 1000);
+	}
+	if (Number >= 1000000 && Number <= 1999999)
+	{
+		return " One Million  " + NumberToText(Number % 10000000);
+	}
+	if (Number >= 2000000 && Number <= 999999999)
+	{
+		return NumberToText(Number / 1000000) + " Milliones " + NumberToText(Number % 1000000);
+	}
+	if (Number >= 1000000000 && Number <= 1999999999)
+	{
+		return " One Billion " + NumberToText(Number % 1000000000);
+	}
+	else
+	{
+		return NumberToText(Number / 1000000000) + " Billiones " + NumberToText(Number % 1000000000);
+	}
+
+
+
+
+}
+
+
+
+
+
+
+int main()
+{
+
+	int Number = ReadNumber();
+
+	cout << NumberToText(Number);
+
+	system("pause>0");
+
+	return 0;
+}
