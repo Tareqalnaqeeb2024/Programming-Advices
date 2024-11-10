@@ -1,0 +1,109 @@
+// CurrencyExchange.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include <iostream>
+#include<queue>
+using namespace std;
+class Node
+{
+public:
+	int Value;
+	Node* next;
+};
+
+void InsertAtBagining(Node*& head, int Value)
+{
+	Node* New_Node = new Node();
+
+	New_Node->Value = Value;
+	New_Node->next = head;
+
+	head = New_Node;
+
+}
+
+void PrintList(Node* head)
+{
+	while (head != NULL)
+	{
+		cout << head->Value << " " ;
+		head = head->next;
+	}
+}
+void InsertAfter(Node* Prev_Node, int Value)
+{
+	if (Prev_Node == NULL)
+	{
+		cout << " Prev_Node CanNot Be Null\n ";
+		return;
+	}
+
+	Node* New_node = new Node();
+	New_node->Value = Value;
+	New_node->next = Prev_Node->next;
+	Prev_Node->next = New_node;
+
+}
+
+void InsertAtEnd(Node*& head, int Value)
+{
+	Node* New_Node = new Node();
+
+	New_Node->Value = Value;
+	New_Node->next = NULL;
+
+
+	if (head == NULL)
+	{
+		 head = New_Node;
+		return;
+	}
+
+	Node* Last_Node = head;
+
+	while (Last_Node->next != NULL)
+	{
+		Last_Node = Last_Node->next;
+	}
+
+	Last_Node->next = New_Node;
+	return;
+
+
+
+
+
+}
+Node* Find(Node* head, int Value)
+{
+	while (head != NULL)
+	{
+		if (head->Value == Value)
+			return head;
+		head = head->next;
+	}
+	return NULL;
+}
+int main()
+{
+	Node* head = NULL;
+
+	InsertAtEnd(head, 1);
+	InsertAtEnd(head, 2);
+	InsertAtEnd(head, 3);
+	InsertAtEnd(head, 4);
+
+	InsertAtBagining(head, 0);
+
+	
+	PrintList(head);
+
+	
+
+
+	system("pause");
+	return 0;
+	
+	
+    
+}

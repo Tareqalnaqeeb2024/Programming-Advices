@@ -1,0 +1,57 @@
+// CurrencyExchange.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include <iostream>
+#include<queue>
+using namespace std;
+class Node
+{
+public:
+	int Value;
+	Node* next;
+};
+
+void InsertAtBagining(Node*& head, int Value)
+{
+	Node* New_Node = new Node();
+
+	New_Node->Value = Value;
+	New_Node->next = head;
+
+	head = New_Node;
+
+}
+
+void PrintList(Node* head)
+{
+	while (head != NULL)
+	{
+		cout << head->Value << " " << endl;
+		head = head->next;
+	}
+}
+
+int main()
+{
+	Node* head = NULL;
+
+	InsertAtBagining(head, 1);
+	InsertAtBagining(head, 2);
+	InsertAtBagining(head, 3);
+	InsertAtBagining(head, 4);
+	InsertAtBagining(head, 5);
+
+	PrintList(head);
+
+
+
+	
+
+	
+
+	system("pause");
+	return 0;
+	
+	
+    
+}

@@ -1,0 +1,58 @@
+// CurrencyExchange.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include <iostream>
+#include<queue>
+class Node
+{
+public:
+	int Value;
+	Node* next;
+};
+using namespace std;
+int main()
+{
+
+	Node* Head;
+	Node* Node1 =NULL;
+	Node* Node2 =NULL;
+	Node* Node3 =NULL;
+	
+	// allcate 3 Nodes In heap
+
+	Node1 = new Node();
+	Node2 = new Node();
+	Node3 = new Node();
+
+	// assign Values Value
+
+
+	Node1->Value = 1;
+	Node2->Value = 2;
+	Node3->Value = 3;
+
+	//contect Nodes
+
+	Node1->next = Node2;
+	Node2->next = Node3;
+	Node3->next = NULL;
+
+	//Print The Linked List 
+
+	Head = Node1;
+
+	while (Head != NULL)
+	{
+		cout << Head->Value << " ";
+		Head = Head->next;
+
+	}
+
+	
+
+	system("pause");
+	return 0;
+	
+	
+    
+}
