@@ -1,0 +1,261 @@
+#pragma once
+#include<iostream>
+using namespace std;
+template <class T>
+class clsDynamicArry
+{
+protected:
+	int _Size =  0;
+
+	T* _TempArray ;
+
+public:
+	T* OriginalArry;
+
+	clsDynamicArry(int size = 0)
+	{
+		if (size < 0)
+		
+			size = 0;
+
+			_Size = size;
+
+			OriginalArry = new T[_Size];
+		
+	}
+
+	~clsDynamicArry()
+	{
+		delete[] OriginalArry;
+	}
+
+	bool SetItem(int Index, T value)
+	{
+		if (Index >= _Size || _Size < 0)
+		{
+			return false;
+		}
+
+		OriginalArry[Index] = value;
+		return true;
+
+	}
+
+	int Size()
+	{
+		return _Size;
+	}
+
+	bool IsEmpty()
+	{
+		return (_Size==0 ? true : false);
+	}
+
+	void PrintList()
+	{
+		for ( int i = 0; i <= _Size - 1; i++)
+		{
+			cout << OriginalArry[i] << " ";
+		}
+		cout << "\n";
+	}
+
+	void Resize(int NewSize)
+	{
+		if (NewSize < 0)
+		{
+			NewSize = 0;
+		}
+		_TempArray = new T[NewSize];
+		if (NewSize < _Size)
+		
+			_Size = NewSize;
+
+
+		
+
+		for (int i = 0; i < _Size; i++)
+		{
+			_TempArray[i] = OriginalArry[i];
+		}
+
+		_Size = NewSize;
+		delete[] OriginalArry;
+		OriginalArry = _TempArray;
+	}
+
+	T  GetItem(int Index)
+	{
+		
+		
+     	return   OriginalArry[Index];
+		
+	
+	}
+
+	void Revese()
+	{
+		_TempArray = new T[_Size];
+		int Counter = 0;
+		for (int i = _Size -1; i >= 0; i--)
+		{
+			_TempArray[Counter] = OriginalArry[i];
+			Counter++;
+
+
+		}
+		delete[] OriginalArry;
+		OriginalArry = _TempArray;
+
+		
+	
+	}
+
+	void Clear()
+	{
+		_Size = 0;
+		_TempArray = new T[0];
+		delete[] OriginalArry;
+		OriginalArry = _TempArray;
+
+
+	}
+
+	bool DeleteAtItem(int index)
+	{
+		if (index >= _Size || index < 0)
+		{
+			return false;
+		}
+
+		_Size--;
+
+		_TempArray = new T[_Size];
+		// copy  all before index
+		for (int i = 0; i <  index; i++)
+
+		{
+			_TempArray[i] = OriginalArry[i];
+		}
+		// copy all after index
+		for (int i = index +1 ; i < _Size +1 ; i++)
+		{
+			_TempArray[i - 1] = OriginalArry[i];
+		}
+
+		delete [] OriginalArry;
+		OriginalArry = _TempArray;
+		return true;
+	
+	
+	}
+
+	void DeleteFirstItem()
+	{
+		DeleteAtItem(0);
+	}
+
+	void DeleteLastItem()
+	{
+		DeleteAtItem(_Size - 1);
+	}
+
+	int Find(T  item)
+	{
+		for (int i = 0; i < _Size ; i++)
+		{
+
+			if (OriginalArry[i] == item)
+				
+			return i;
+		
+
+		}
+
+		return -1;
+	}
+
+	bool  DeleteItem(T Item)
+	{
+		int Index = Find(Item);
+
+		if (Index == 0)
+			return -1;
+		else
+			DeleteAtItem(Index);
+		return true;
+
+	}
+
+	bool InsertAt(T index, T value)
+	{
+		if (index > _Size || index < 0)
+		{
+			return false;
+		}
+
+		_Size++;
+
+		_TempArray = new T[_Size];
+
+		// copy all before index 
+
+		for (int i = 0; i < index; i++)
+		{
+			_TempArray[i] = OriginalArry[i];
+
+		}
+
+		_TempArray[index] = value;
+
+		//copy all after index
+		
+		for (int i = index; i < _Size -1; i++)
+		{
+			_TempArray[i + 1] = OriginalArry[i];
+
+		}
+
+		delete[] OriginalArry;
+		OriginalArry = _TempArray;
+		return true;
+
+
+	}
+
+	void InsertAtBeginning(T value)
+	{
+		 InsertAt(0, value);
+
+	}
+
+	bool InsertBefore(T index, T value)
+	{
+		if (index < 1)
+
+			return InsertAt(0, value);
+		else
+			return InsertAt(index - 1, value);
+		
+
+	
+	}
+
+	bool InsertAfter(T index, T value)
+	{
+		if (index >= _Size)
+			return InsertAt(_Size - 1, value);
+		else
+			return InsertAt(_Size + 1, value);
+
+	}
+
+	bool InsertAtEnd( T value)
+	{
+		return InsertAt(_Size, value);
+	}
+
+
+
+};
+
